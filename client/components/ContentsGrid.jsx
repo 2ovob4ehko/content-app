@@ -1,11 +1,12 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Masonry from 'react-masonry-component';
 import Content from './Content.jsx'
 
 import './ContentsGrid.less';
 
 
-const ContentsGrid = React.createClass({
+const ContentsGrid = createReactClass({
     render(){
         const masonryOptions = {
             itemSelector: '.Content',

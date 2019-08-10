@@ -1,8 +1,9 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 
 import './Content.less';
 
-const Content = React.createClass({
+const Content = createReactClass({
     render(){
         return (
             <div className='Content'>

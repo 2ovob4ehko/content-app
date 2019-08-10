@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 
 import ContentsActions from '../actions/ContentsActions';
 import ContentsStore from '../stores/ContentsStore';
@@ -15,14 +16,16 @@ function getStateFromFlux(){
     };
 }
 
-const App = React.createClass({
+const App = createReactClass({
     getInitialState(){
         return getStateFromFlux();
     },
-    componentWillMount(){
-        ContentsActions.loadContents();
-    },
+    // will depricated in react@17
+    // componentWillMount(){
+    //     ContentsActions.loadContents();
+    // },
     componentDidMount(){
+        ContentsActions.loadContents();
         ContentsStore.addChangeListener(this._onChange);
     },
     componentWillUnmount(){

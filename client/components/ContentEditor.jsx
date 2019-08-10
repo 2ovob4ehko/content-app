@@ -1,8 +1,9 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 
 import './ContentEditor.less';
 
-const ContentEditor = React.createClass({
+const ContentEditor = createReactClass({
     getInitialState(){
         return {
             content_type: 'movie', // select: movie, series, book, song

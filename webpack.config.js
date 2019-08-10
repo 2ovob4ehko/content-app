@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: "./client/main.js",
@@ -8,47 +9,129 @@ module.exports = {
         filename: "bundle.js"
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loader: "babel",
-                exclude: [/node_modules/, /public/]
+                exclude: [/node_modules/, /public/],
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader!autoprefixer-loader!less",
-                exclude: [/node_modules/, /public/]
+                exclude: [/node_modules/, /public/],
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                autoprefixer()
+                            ],
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'less-loader'
+                    }
+                ]
             },
             {
                 test: /\.less$/,
-                loader: "style-loader!css-loader!autoprefixer-loader!less",
-                exclude: [/node_modules/, /public/]
+                exclude: [/node_modules/, /public/],
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                autoprefixer()
+                            ],
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'less-loader'
+                    }
+                ]
             },
             {
                 test: /\.gif$/,
-                loader: "url-loader?limit=10000&mimetype=image/gif"
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'image/gif'
+                        }
+                    }
+                ]
             },
             {
                 test: /\.jpg$/,
-                loader: "url-loader?limit=10000&mimetype=image/jpg"
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'image/jpg'
+                        }
+                    }
+                ]
             },
             {
                 test: /\.png$/,
-                loader: "url-loader?limit=10000&mimetype=image/png"
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'image/png'
+                        }
+                    }
+                ]
             },
             {
                 test: /\.svg$/,
-                loader: "url-loader?limit=26000&mimetype=image/svg+xml"
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 26000,
+                            mimetype: 'image/svg+xml'
+                        }
+                    }
+                ]
             },
             {
                 test: /\.jsx$/,
-                loader: "react-hot!babel",
-                exclude: [/node_modules/, /public/]
-            },
-            {
-                test: /\.json$/,
-                loader: "json-loader"
-            },
+                exclude: [/node_modules/, /public/],
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            '@babel/preset-env',
+                            '@babel/preset-react'
+                        ],
+                        plugins: [
+                            'react-hot-loader/babel'
+                        ]
+                    }
+                }
+            }
         ]
     }
 }

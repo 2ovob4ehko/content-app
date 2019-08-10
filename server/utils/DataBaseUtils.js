@@ -7,7 +7,7 @@ import config from '../../etc/config.json';
 const Content = mongoose.model('Content');
 
 export function setUpConnection(){
-    mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`);
+    mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`, { useNewUrlParser: true });
 }
 
 export function listContents(){
