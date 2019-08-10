@@ -1,0 +1,80 @@
+.ContentEditor{
+    width: 100%;
+    max-width: 600px;
+    padding: 15px 7.5px;
+    margin: 16px auto;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+}
+.ContentEditor_body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+}
+.ContentEditorPart{
+    width: 50%;
+    flex: 0 0 50%;
+    padding: 0 7.5px;
+    display: flex;
+    flex-direction: column;
+}
+@media (max-width: 768px){
+    .ContentEditorPart{
+        min-width: 100%;
+    }
+}
+.InputElement{
+    width: 100%;
+    resize: none;
+    margin: 5px 0;
+    font-size: 14px;
+    border: 1px solid rgba(0,0,0,0.05);
+    font-weight: 300;
+    background-color: transparent;
+    padding: 5px;
+    &:focus{
+        outline: 0;
+    }
+}
+select.InputElement{
+    padding-left: 2px;
+}
+.ContentEditor_footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 15px 7.5px 0px;
+}
+.ContentEditor_button{
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s;
+    &:hover{
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+    &:disabled{
+        opacity: 0.5;
+    }
+    &:not(:disabled):not(.disabled){
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,16 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    background-color: #eaeaea;
+    margin: 0;
+    padding: 0;
+}
+
+#mount_point{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

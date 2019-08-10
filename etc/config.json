@@ -1,0 +1,10 @@
+{
+    "apiPrefix": "http://localhost:8080",
+    "origin": "http://localhost:8090",
+    "serverPort": "8080",
+    "db": {
+        "name": "contents",
+        "host": "localhost",
+        "port": 27017
+    }
+}
