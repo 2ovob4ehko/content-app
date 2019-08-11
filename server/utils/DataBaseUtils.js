@@ -33,5 +33,5 @@ export function createContent(data){
 }
 
 export function deleteContent(id){
-    return Content.findById(id).remove();
+    return Content.findById(id).deleteOne();
 }

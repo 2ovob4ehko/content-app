@@ -23,11 +23,9 @@ const ContentsGrid = createReactClass({
                     this.props.contents.map(content =>
                         <Content
                             key={content.id}
-                            title={content.title}
+                            content={content}
                             onDelete={this.props.onContentDelete.bind(null, content)}
-                        >
-                            {content.description}
-                        </Content>
+                        />
                     )
                 }
             </Masonry>

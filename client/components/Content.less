@@ -1,35 +1,84 @@
 .Content {
     width: 250px;
-    height: auto;
-    float: left;
+    // height: auto;
+    // float: left;
     background-color: yellow;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     border-radius: 2px;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 10px;
     transition: box-shadow .3s;
     white-space: pre-wrap;
     word-wrap: break-word;
-
+    overflow: hidden;
+    color: #fff;
     &:hover {
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
         .Content_del_icon {
-            display: block;
+            display: flex;
         }
     }
+    &.movie{
+        background-color: #5F6993;
+    }
+    &.series{
+        background-color: #f6791e;
+    }
+    &.book{
+        background-color: #75361B;
+    }
+    &.song{
+        background-color: #c38fbc;
+    }
 }
-
+.Content_wrapper{
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    top: 0px;
+    left: 0px;
+    opacity: 0.1;
+    transition: all 0.5s;
+}
+.Content_wrapper:hover{
+    opacity: 1;
+    background-color: rgba(0,0,0,0.9);
+    color: #fff;
+}
 .Content_title {
     margin: 0;
     margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
 }
-
+.Content_description{
+    overflow: auto;
+    font-size: 0.8rem;
+}
 .Content_del_icon {
     position: absolute;
     top:5px;
     right:5px;
     display: none;
-    color: rgba(0,0,0,0.6);
+    color: rgba(255,255,255,0.6);
     cursor: pointer;
+    font-size: 25px;
+    line-height: 20px;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+.Content_image{
+    width: 100%;
+    padding-top: 100%;
+    background-size: cover;
+    background-position: center center;
+    // background-color: #666;
 }

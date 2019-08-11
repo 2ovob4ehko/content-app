@@ -1,5 +1,8 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+import axios from 'axios';
+import {apiPrefix} from '../../etc/config.json';
+import UploadImage from './UploadImage.jsx'
 
 import './ContentEditor.less';
 
@@ -10,6 +13,7 @@ const ContentEditor = createReactClass({
             title: '',
             description: '',
             original_name: '',
+            temp_image: '',
             image: '',
             country: ['UA'], //multiselect: UA => Україна, US => США...
             creator: '',
@@ -32,7 +36,7 @@ const ContentEditor = createReactClass({
         this.setState({original_name: event.target.value});
     },
     handleImageChange(event){
-        this.setState({image: event.target.value});
+        this.setState({temp_image: event.target.files[0]});
     },
     handleCountryChange(event){
         const value = [];
@@ -62,47 +66,57 @@ const ContentEditor = createReactClass({
         this.setState({link: event.target.value});
     },
     handleContentAdd(){
-        const newContent = {
-            content_type: this.state.content_type,
-            title: this.state.title,
-            description: this.state.description,
-            original_name: this.state.original_name,
-            image: this.state.image,
-            country: this.state.country,
-            creator: this.state.creator,
-            genre: this.state.genre,
-            year: this.state.year,
-            mark: this.state.mark,
-            link: this.state.link
+        const formData = new FormData();
+        formData.append('temp_image',this.state.temp_image);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
         };
+        axios.post(`${apiPrefix}/upload`,formData,config)
+            .then((res) => {
+                const newContent = {
+                    content_type: this.state.content_type,
+                    title: this.state.title,
+                    description: this.state.description,
+                    original_name: this.state.original_name,
+                    image: res.data.filename,
+                    country: this.state.country,
+                    creator: this.state.creator,
+                    genre: this.state.genre,
+                    year: this.state.year,
+                    mark: this.state.mark,
+                    link: this.state.link
+                };
 
-        this.props.onContentAdd(newContent);
-        this.setState({
-            content_type: 'movie',
-            title: '',
-            description: '',
-            original_name: '',
-            image: '',
-            country: '',
-            creator: '',
-            genre: '',
-            year: '',
-            mark: '',
-            link: ''
+                this.props.onContentAdd(newContent);
+                this.setState({
+                    content_type: '',
+                    title: '',
+                    description: '',
+                    original_name: '',
+                    temp_image: '',
+                    image: '',
+                    country: '',
+                    creator: '',
+                    genre: '',
+                    year: '',
+                    mark: '',
+                    link: ''
+                });
+
+                document.getElementById('ImagePreview').style = null;
+                document.getElementById('files-upload').value = null;
+            }).catch((err) => {
+                console.log(err);
         });
-        document.getElementById('files-upload').value = null;
     },
     render(){
         return (
             <div className='ContentEditor'>
                 <div className='ContentEditor_body'>
                     <div className='ContentEditorPart'>
-                        <input type='file' id='files-upload' className='InputElement' onChange={this.handleImageChange}/>
-                        <select className='InputElement' size='3' value={this.state.country} multiple={true} onChange={this.handleCountryChange}>
-                            <option value='UA'>Україна</option>
-                            <option value='US'>США</option>
-                            <option value='GB'>Британія</option>
-                        </select>
+                        <UploadImage className='InputElement' onImageChange={this.handleImageChange} />
                         <input type='number' min='0' max='10' step='1' className='InputElement' placeholder='Оцінка' value={this.state.mark} onChange={this.handleMarkChange} />
                         <input type='text' className='InputElement' placeholder='Посилання' value={this.state.link} onChange={this.handleLinkChange} />
                     </div>
@@ -118,6 +132,11 @@ const ContentEditor = createReactClass({
                         <textarea className='InputElement' placeholder='Опис' rows={5} value={this.state.description} onChange={this.handleDescriptionChange} />
                         <input type='text' className='InputElement' placeholder='Автор' value={this.state.creator} onChange={this.handleCreatorChange} />
                         <input type='text' className='InputElement' placeholder='Жанр' value={this.state.genre} onChange={this.handleGenreChange} />
+                        <select className='InputElement' size='3' value={this.state.country} multiple={true} onChange={this.handleCountryChange}>
+                            <option value='UA'>Україна</option>
+                            <option value='US'>США</option>
+                            <option value='GB'>Британія</option>
+                        </select>
                         <input type='number' min='1900' max='2100' step='1' className='InputElement' placeholder='Рік' value={this.state.year} onChange={this.handleYearChange} />
                     </div>
                 </div>
