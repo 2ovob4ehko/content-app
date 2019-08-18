@@ -4,12 +4,16 @@ import cors from 'cors';
 import path from 'path';
 import multer from 'multer';
 import mkdirp from 'mkdirp';
+import fs from 'fs';
+import { promisify } from 'util';
 
 import {serverPort, origin} from '../etc/config.json';
 
 import * as db from './utils/DataBaseUtils.js';
 
 db.setUpConnection();
+
+const unlinkAsync = promisify(fs.unlink)
 
 const uploadPath = './public/uploads/';
 mkdirp.sync(uploadPath);
@@ -38,6 +42,9 @@ app.post('/contents', (req, res) => {
 });
 
 app.delete('/contents/:id', (req, res) => {
+    db.findContent(req.params.id).then(content => {
+        unlinkAsync('./public'+content.image);
+    });
     db.deleteContent(req.params.id).then(data => res.send(data));
 });
 

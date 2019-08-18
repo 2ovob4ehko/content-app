@@ -122,6 +122,16 @@ sudo npm install path --save
 ```bash
 sudo npm install mkdirp --save
 ```
+#### fs
+[mkdirp](https://www.npmjs.com/package/fs)
+```bash
+sudo npm install fs --save
+```
+#### util
+[mkdirp](https://www.npmjs.com/package/util)
+```bash
+sudo npm install util --save
+```
 ---
 ### Uploading form
 [uploading image form to Cloudinary ](https://codeburst.io/react-image-upload-with-kittens-cc96430eaece)

@@ -14,6 +14,10 @@ export function listContents(){
     return Content.find();
 }
 
+export function findContent(id){
+    return Content.findById(id);
+}
+
 export function createContent(data){
     const content = new Content({
         content_type: data.content_type,

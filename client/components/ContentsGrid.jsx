@@ -10,7 +10,7 @@ const ContentsGrid = createReactClass({
     render(){
         const masonryOptions = {
             itemSelector: '.Content',
-            columnWidth: 250,
+            columnWidth: 375,
             gutter: 10,
             isFitWidth: true
         };
