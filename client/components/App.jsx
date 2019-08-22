@@ -17,6 +17,7 @@ function getStateFromFlux(){
 }
 
 const App = createReactClass({
+    contentEditor: React.createRef(),
     getInitialState(){
         return getStateFromFlux();
     },
@@ -37,12 +38,15 @@ const App = createReactClass({
     handleContentDelete(content){
         ContentsActions.deleteContent(content.id);
     },
+    handleContentEdit(content){
+        this.contentEditor.current.handleFillContentForm(content);
+    },
     render(){
         return (
             <div className='App'>
                 <h2 className='App_header'>ContentsApp</h2>
-                <ContentEditor onContentAdd={this.handleContentAdd} />
-                <ContentsGrid contents={this.state.contents} onContentDelete={this.handleContentDelete} />
+                <ContentEditor onContentAdd={this.handleContentAdd} ref={this.contentEditor} />
+                <ContentsGrid contents={this.state.contents} onContentDelete={this.handleContentDelete} onContentEdit={this.handleContentEdit} />
             </div>
         );
     },

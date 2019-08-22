@@ -15,7 +15,7 @@
     &:hover {
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
-        .Content_del_icon {
+        .Content_action_wrapper > *{
             display: flex;
         }
     }
@@ -78,20 +78,25 @@
     max-height: 100px;
     font-size: 0.8rem;
 }
+.Content_action_wrapper{
+  display: flex;
+  min-height: 20px;
+  justify-content: flex-end;
+}
+.Content_action_btn{
+  display: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+}
 .Content_del_icon {
-    position: absolute;
-    top:5px;
-    right:5px;
-    display: none;
-    color: rgba(255,255,255,0.6);
-    cursor: pointer;
-    font-size: 25px;
-    line-height: 20px;
-    width: 20px;
-    height: 20px;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+
 }
 .Content_image{
     width: 100%;

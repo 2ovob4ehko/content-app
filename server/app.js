@@ -38,12 +38,25 @@ app.get('/contents', (req, res) => {
 });
 
 app.post('/contents', (req, res) => {
+  if(req.body.id){
+    if(req.body.image){
+      db.findContent(req.body.id).then(content => {
+        if(content.image){
+          unlinkAsync('./public'+content.image);
+        }
+      });
+    }
+    db.updateContent(req.body).then(data => res.send(data));
+  }else{
     db.createContent(req.body).then(data => res.send(data));
+  }
 });
 
 app.delete('/contents/:id', (req, res) => {
     db.findContent(req.params.id).then(content => {
+      if(content.image){
         unlinkAsync('./public'+content.image);
+      }
     });
     db.deleteContent(req.params.id).then(data => res.send(data));
 });

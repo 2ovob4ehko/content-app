@@ -1,5 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt, faPen } from '@fortawesome/free-solid-svg-icons'
 
 import './Content.less';
 
@@ -10,12 +12,19 @@ const Content = createReactClass({
         };
         return (
             <div className={'Content ' + this.props.content.content_type}>
-                <span className='Content_del_icon' onClick={this.props.onDelete}>x</span>
                 <div className='Content_wrapper'>
                     <div className='Content_image_wrapper'>
-                        <div className='Content_image' style={imageStyle}></div>
+                        {this.props.content.image ? <div className='Content_image' style={imageStyle}></div> : <div className='Content_image'></div>}
                     </div>
                     <div className='Content_params_wrapper'>
+                        <div className='Content_action_wrapper'>
+                          <span className='Content_action_btn Content_edit_icon' onClick={this.props.onEdit}>
+                            <FontAwesomeIcon icon={faPen} />
+                          </span>
+                          <span className='Content_action_btn Content_del_icon' onClick={this.props.onDelete}>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                          </span>
+                        </div>
                         <h4 className='Content_title'>{this.props.content.title}</h4>
                         {this.props.content.original_name ? <p>Оригінал: <strong>{this.props.content.original_name}</strong></p> : ''}
                         {this.props.content.creator ? <p>Автор: <strong>{this.props.content.creator}</strong></p> : ''}

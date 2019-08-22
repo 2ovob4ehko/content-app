@@ -25,6 +25,7 @@ const ContentsGrid = createReactClass({
                             key={content.id}
                             content={content}
                             onDelete={this.props.onContentDelete.bind(null, content)}
+                            onEdit={this.props.onContentEdit.bind(null, content)}
                         />
                     )
                 }

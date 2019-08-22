@@ -20,7 +20,9 @@ const ContentEditor = createReactClass({
             genre: '',
             year: '', //0-3000 integer
             mark: '', //0-10 integer
-            link: ''
+            link: '',
+            content_id: '',
+            is_edit: false
         };
     },
     handleContentTypeChange(event){
@@ -66,49 +68,87 @@ const ContentEditor = createReactClass({
         this.setState({link: event.target.value});
     },
     handleContentAdd(){
-        const formData = new FormData();
-        formData.append('temp_image',this.state.temp_image);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        };
-        axios.post(`${apiPrefix}/upload`,formData,config)
-            .then((res) => {
-                const newContent = {
-                    content_type: this.state.content_type,
-                    title: this.state.title,
-                    description: this.state.description,
-                    original_name: this.state.original_name,
-                    image: res.data.filename,
-                    country: this.state.country,
-                    creator: this.state.creator,
-                    genre: this.state.genre,
-                    year: this.state.year,
-                    mark: this.state.mark,
-                    link: this.state.link
-                };
+        if(this.state.temp_image){
+          const formData = new FormData();
+          formData.append('temp_image',this.state.temp_image);
+          const config = {
+              headers: {
+                  'content-type': 'multipart/form-data'
+              }
+          };
+          axios.post(`${apiPrefix}/upload`,formData,config)
+              .then((res) => {
+                  this.sendContent({
+                      content_type: this.state.content_type,
+                      title: this.state.title,
+                      description: this.state.description,
+                      original_name: this.state.original_name,
+                      image: res.data.filename,
+                      country: this.state.country,
+                      creator: this.state.creator,
+                      genre: this.state.genre,
+                      year: this.state.year,
+                      mark: this.state.mark,
+                      link: this.state.link,
+                      id: this.state.content_id
+                  });
+              }).catch((err) => {
+                  console.log(err);
+          });
+        }else{
+          this.sendContent({
+              content_type: this.state.content_type,
+              title: this.state.title,
+              description: this.state.description,
+              original_name: this.state.original_name,
+              country: this.state.country,
+              creator: this.state.creator,
+              genre: this.state.genre,
+              year: this.state.year,
+              mark: this.state.mark,
+              link: this.state.link,
+              id: this.state.content_id
+          });
+        }
+    },
+    sendContent(newContent){
+      this.props.onContentAdd(newContent);
+      this.setState({
+          content_type: '',
+          title: '',
+          description: '',
+          original_name: '',
+          temp_image: '',
+          image: '',
+          country: '',
+          creator: '',
+          genre: '',
+          year: '',
+          mark: '',
+          link: '',
+          content_id: '',
+          is_edit: false
+      });
 
-                this.props.onContentAdd(newContent);
-                this.setState({
-                    content_type: '',
-                    title: '',
-                    description: '',
-                    original_name: '',
-                    temp_image: '',
-                    image: '',
-                    country: '',
-                    creator: '',
-                    genre: '',
-                    year: '',
-                    mark: '',
-                    link: ''
-                });
-
-                document.getElementById('ImagePreview').style = null;
-                document.getElementById('files-upload').value = null;
-            }).catch((err) => {
-                console.log(err);
+      document.getElementById('ImagePreview').style = null;
+      document.getElementById('files-upload').value = null;
+    },
+    handleFillContentForm(content){
+        this.setState({
+            content_type: content.content_type,
+            title: content.title,
+            description: content.description,
+            original_name: content.original_name,
+            temp_image: '',
+            image: '',
+            country: content.country,
+            creator: content.creator,
+            genre: content.genre,
+            year: content.year,
+            mark: content.mark,
+            link: content.link,
+            content_id: content.id,
+            is_edit: true
         });
     },
     render(){
@@ -141,7 +181,7 @@ const ContentEditor = createReactClass({
                     </div>
                 </div>
                 <div className='ContentEditor_footer'>
-                    <button className='ContentEditor_button' disabled={!this.state.title} onClick={this.handleContentAdd}>Додати</button>
+                    <button className='ContentEditor_button' disabled={!this.state.title} onClick={this.handleContentAdd}>{this.state.is_edit ? 'Зберегти' : 'Додати'}</button>
                 </div>
             </div>
         );
