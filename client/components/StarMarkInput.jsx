@@ -22,7 +22,6 @@ const StarMarkInput = createReactClass({
     render(){
         return (
             <div className={this.props.className + ' StarMarkInput'}>
-                <input type='hidden' value={this.props.value} />
                 <div className='StarMarkInputPreview' id='StarMarkInputPreview'>
                   {this.createStars()}
                 </div>

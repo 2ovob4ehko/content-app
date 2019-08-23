@@ -6,13 +6,15 @@ import ContentsStore from '../stores/ContentsStore';
 
 import ContentEditor from './ContentEditor.jsx';
 import ContentsGrid from './ContentsGrid.jsx';
+import ContentSearch from './ContentSearch.jsx';
 
 import './App.less';
 
 function getStateFromFlux(){
     return{
         isLoading: ContentsStore.isLoading(),
-        contents: ContentsStore.getContents()
+        contents: ContentsStore.getContents(),
+        filteredContent: ContentsStore.getContents()
     };
 }
 
@@ -41,12 +43,36 @@ const App = createReactClass({
     handleContentEdit(content){
         this.contentEditor.current.handleFillContentForm(content);
     },
+    handleSearchContent(event){
+      let unfilteredContent = [];
+      let filteredContent = [];
+      if(event.target.value !== ""){
+        unfilteredContent = this.state.contents;
+        filteredContent = unfilteredContent.filter(content => {
+          const filter = event.target.value.toLowerCase();
+          for(var prop in content){
+            if(typeof content[prop] !== 'string') continue;
+            const lc = content[prop].toLowerCase();
+            if(lc.includes(filter)){
+              return true;
+            }
+          }
+          return false;
+        });
+      }else{
+        filteredContent = this.state.contents;
+      }
+      this.setState({
+        filteredContent: filteredContent
+      });
+    },
     render(){
         return (
             <div className='App'>
                 <h2 className='App_header'>ContentsApp</h2>
                 <ContentEditor onContentAdd={this.handleContentAdd} ref={this.contentEditor} />
-                <ContentsGrid contents={this.state.contents} onContentDelete={this.handleContentDelete} onContentEdit={this.handleContentEdit} />
+                <ContentSearch onSearch={this.handleSearchContent} />
+                <ContentsGrid contents={this.state.filteredContent} onContentDelete={this.handleContentDelete} onContentEdit={this.handleContentEdit} />
             </div>
         );
     },
