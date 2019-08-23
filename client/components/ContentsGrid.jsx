@@ -10,7 +10,7 @@ const ContentsGrid = createReactClass({
     render(){
         const masonryOptions = {
             itemSelector: '.Content',
-            columnWidth: 375,
+            columnWidth: '.Content_size',
             gutter: 10,
             isFitWidth: true
         };
@@ -19,6 +19,7 @@ const ContentsGrid = createReactClass({
                 className='ContentsGrid'
                 options={masonryOptions}
             >
+            <div className='Content_size'></div>
                 {
                     this.props.contents.map(content =>
                         <Content
