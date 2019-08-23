@@ -3,6 +3,7 @@ import createReactClass from 'create-react-class';
 import axios from 'axios';
 import {apiPrefix} from '../../etc/config.json';
 import UploadImage from './UploadImage.jsx'
+import StarMarkInput from './StarMarkInput.jsx'
 
 import './ContentEditor.less';
 
@@ -61,8 +62,8 @@ const ContentEditor = createReactClass({
     handleYearChange(event){
         this.setState({year: event.target.value});
     },
-    handleMarkChange(event){
-        this.setState({mark: event.target.value});
+    handleMarkChange(value){
+        this.setState({mark: value});
     },
     handleLinkChange(event){
         this.setState({link: event.target.value});
@@ -157,7 +158,7 @@ const ContentEditor = createReactClass({
                 <div className='ContentEditor_body'>
                     <div className='ContentEditorPart'>
                         <UploadImage className='InputElement' onImageChange={this.handleImageChange} />
-                        <input type='number' min='0' max='10' step='1' className='InputElement' placeholder='Оцінка' value={this.state.mark} onChange={this.handleMarkChange} />
+                        <StarMarkInput max='10' className='InputElement' onMarkChange={this.handleMarkChange} value={this.state.mark}/>
                         <input type='text' className='InputElement' placeholder='Посилання' value={this.state.link} onChange={this.handleLinkChange} />
                     </div>
                     <div className='ContentEditorPart'>

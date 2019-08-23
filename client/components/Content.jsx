@@ -2,6 +2,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faPen } from '@fortawesome/free-solid-svg-icons'
+import StarMark from './StarMark.jsx'
 
 import './Content.less';
 
@@ -31,7 +32,7 @@ const Content = createReactClass({
                         {this.props.content.genre ? <p>Жанр: <strong>{this.props.content.genre}</strong></p> : ''}
                         {this.props.content.country ? <p>Країна: <strong>{this.props.content.country}</strong></p> : ''}
                         {this.props.content.year ? <p>Рік: <strong>{this.props.content.year}</strong></p> : ''}
-                        {this.props.content.mark ? <p>Оцінка: <strong>{this.props.content.mark}</strong></p> : ''}
+                        {this.props.content.mark ? <p>Оцінка: <br /><StarMark max='10' value={this.props.content.mark}/></p> : ''}
                         {this.props.content.link ? <a href={this.props.content.link} target='_blank'><strong>Джерело</strong></a> : ''}
                     </div>
                     <div className='Content_description_wrapper'>
